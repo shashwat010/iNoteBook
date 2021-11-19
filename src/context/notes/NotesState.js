@@ -12,7 +12,7 @@ const NotesState = (props) => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjE1NDNiYTdkYzFhY2IwYjUyYmU1MDc4In0sImlhdCI6MTYzMzEwNzk0NX0.q4g3obTujGLaFMo5kbwXMJzwA5VAiTEcYQ6NnVHKpw8'
+                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjE5MTBiYmMxNDRjYmQ2ZTMxOTI0YmQ3In0sImlhdCI6MTYzNjg5NTkxNn0.Uj4sRqKswB7jepyNciMkJelip-KTb6bzBDeJF6fNmTk'
             }
         });
         const json = await response.json();
@@ -25,7 +25,7 @@ const NotesState = (props) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjE1NDNiYTdkYzFhY2IwYjUyYmU1MDc4In0sImlhdCI6MTYzMzEwNzk0NX0.q4g3obTujGLaFMo5kbwXMJzwA5VAiTEcYQ6NnVHKpw8'
+                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjE5MTBiYmMxNDRjYmQ2ZTMxOTI0YmQ3In0sImlhdCI6MTYzNjg5NTkxNn0.Uj4sRqKswB7jepyNciMkJelip-KTb6bzBDeJF6fNmTk'
             },
             body: JSON.stringify({title,desc,tag})
         });
@@ -50,7 +50,7 @@ const NotesState = (props) => {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjE1NDNiYTdkYzFhY2IwYjUyYmU1MDc4In0sImlhdCI6MTYzMzEwNzk0NX0.q4g3obTujGLaFMo5kbwXMJzwA5VAiTEcYQ6NnVHKpw8'
+                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjE5MTBiYmMxNDRjYmQ2ZTMxOTI0YmQ3In0sImlhdCI6MTYzNjg5NTkxNn0.Uj4sRqKswB7jepyNciMkJelip-KTb6bzBDeJF6fNmTk'
             },
         });
         const json = response.json();
@@ -64,24 +64,26 @@ const NotesState = (props) => {
     // function to editNote
     const editNote = async (id, title, desc, tag) => {
         const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjE1NDNiYTdkYzFhY2IwYjUyYmU1MDc4In0sImlhdCI6MTYzMzEwNzk0NX0.q4g3obTujGLaFMo5kbwXMJzwA5VAiTEcYQ6NnVHKpw8'
+                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjE5MTBiYmMxNDRjYmQ2ZTMxOTI0YmQ3In0sImlhdCI6MTYzNjg5NTkxNn0.Uj4sRqKswB7jepyNciMkJelip-KTb6bzBDeJF6fNmTk'
             },
             body: JSON.stringify({title,desc,tag})
         });
         const json = response.json();
 
+        let newNotes=JSON.parse(JSON.stringify(notes));
 
-        for (let index = 0; index < notes.length; index++) {
-            const element = notes[index];
-            if (element._id === id) {
-                element.title = title;
-                element.desc = desc;
-                element.tag = tag;
+        for (let index = 0; index < newNotes.length; index++) {
+            if (newNotes[index]._id === id) {
+                newNotes[index].title = title;
+                newNotes[index].desc = desc;
+                newNotes[index].tag = tag;
+                break;
             }
         }
+        setNotes(newNotes);
     }
     return (
         <NoteContext.Provider value={{ notes, addNote, deleteNote, editNote,getNotes}}>
