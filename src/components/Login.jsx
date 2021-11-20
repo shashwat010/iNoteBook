@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 
-const Login = () => {
+const Login = (props) => {
     let navigate=useNavigate()
     const [credentials, setCredentials] = useState({email:"",password:""})
     const handleSubmit=async (e)=>{
@@ -17,9 +17,10 @@ const Login = () => {
         if(json.success){
             localStorage.setItem('token',json.authToken)
             navigate('/')
+            props.showAlert("Successfully Logged in","success")
         }
         else{
-            alert("Invalid Credintials")
+            props.showAlert("Invalid Details","danger")
         }
         console.log(json);
     }
@@ -27,7 +28,7 @@ const Login = () => {
         setCredentials({...credentials,[e.target.name]:e.target.value})
     }
     return (
-        <div>
+        <div className='container my-4'>
             <form  onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="exampleInputEmail1" className="form-label">
@@ -39,9 +40,6 @@ const Login = () => {
                         id="exampleInputEmail1"
                         aria-describedby="emailHelp"
                     />
-                    <div id="emailHelp" className="form-text">
-                        We'll never share your email with anyone else.
-                    </div>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="exampleInputPassword1" className="form-label">

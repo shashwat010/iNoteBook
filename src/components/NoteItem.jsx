@@ -6,7 +6,8 @@ const NoteItem = (props) => {
     const {deleteNote} = context
     const { note,updateNote } = props;
     const delNote=()=>{
-        deleteNote(note._id);
+        deleteNote(note._id)
+        props.showAlert("Note deleted","danger")
     }
     return (
         <div className="col-md-3">
