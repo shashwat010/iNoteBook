@@ -22,13 +22,13 @@ const Login = (props) => {
         else{
             props.showAlert("Invalid Details","danger")
         }
-        console.log(json);
     }
     const onChange=(e)=>{
         setCredentials({...credentials,[e.target.name]:e.target.value})
     }
     return (
         <div className='container my-4'>
+            <h2>Login to continue to iNoteBook</h2>
             <form  onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="exampleInputEmail1" className="form-label">
